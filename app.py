@@ -1,47 +1,3 @@
-# from fastapi import FastAPI, Request
-# from fastapi.responses import HTMLResponse, JSONResponse
-# from jinja2 import Environment, FileSystemLoader
-# import pandas as pd
-# import threading
-# import os
-# import time
-# from scraper import run_scraper  # Import your scraper script
-
-# app = FastAPI()
-
-# # Setup Jinja2 templating
-# templates = Environment(loader=FileSystemLoader("templates"))
-
-# # Global variable for storing results
-# scraped_data = pd.DataFrame()
-
-# CSV_PATH = r"Cleaned_Seloger_Properties.csv"
-
-# @app.get("/", response_class=HTMLResponse)
-# async def home(request: Request):
-#     template = templates.get_template("index.html")
-#     return template.render(request=request, data=scraped_data.to_dict(orient="records"))
-
-# @app.get("/scrape/")
-# async def scrape():
-#     global scraped_data
-#     def run():
-#         global scraped_data
-#         scraped_data = run_scraper()  # Run scraper function
-#     threading.Thread(target=run).start()
-#     return {"status": "Scraping started"}
-
-# @app.get("/load_csv/")
-# async def load_csv():
-#     try:
-#         df = pd.read_csv(CSV_PATH)
-#         return JSONResponse(content=df.to_dict(orient="records"))
-#     except Exception as e:
-#         return {"error": str(e)}
-
-# if __name__ == "__main__":
-#     import uvicorn
-#     uvicorn.run(app, host="127.0.0.1", port=8000)
 
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -122,8 +78,8 @@ async def filter_fresh():
 
     except Exception as e:
         return {"error": str(e)}
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+if __name__ != "__main__":
+    # Needed for Vercel
+    import logging
+    logging.basicConfig(level=logging.INFO)
 
